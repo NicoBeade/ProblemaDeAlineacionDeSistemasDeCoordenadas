@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+#Meassured points
 P = np.array([
     [611.076, 523.954, 278.609],
     [663.378, 716.959, 284.796],
@@ -12,6 +13,7 @@ P = np.array([
     [629.971, 1701.17, 664.328]
 ])
 
+#Plane points
 Q = np.array([
     [0, 0, 0],
     [199.885, 0, 0],
@@ -160,16 +162,16 @@ if __name__ == "__main__":
     ax = fig.add_subplot(111, projection='3d')
 
     # Plot original points P (in blue)
-    ax.scatter(P[:, 0], P[:, 1], P[:, 2], c='blue', label='Original Points (P)')
+    ax.scatter(P[:, 0], P[:, 1], P[:, 2], c='blue', label='Measured Points')
 
     # Plot points Q (in green)
-    ax.scatter(Q[:, 0], Q[:, 1], Q[:, 2], c='green', label='Points Q')
+    ax.scatter(Q[:, 0], Q[:, 1], Q[:, 2], c='green', label='Plane Points')
 
     # Calculate the aligned points using the optimal rotation matrix
     P_aligned = np.dot(P - np.mean(P, axis=0), R.T) + np.mean(Q, axis=0)
 
     # Plot aligned points (in red)
-    ax.scatter(P_aligned[:, 0], P_aligned[:, 1], P_aligned[:, 2], c='red', label='Aligned Points')
+    ax.scatter(P_aligned[:, 0], P_aligned[:, 1], P_aligned[:, 2], c='red', label='Transformed Points')
 
     # Set plot labels and legend
     ax.set_xlabel('X')
@@ -177,26 +179,9 @@ if __name__ == "__main__":
     ax.set_zlabel('Z')
     ax.legend()
 
-    plt.title('Original Points (P), Points Q, and Aligned Points')
+    # Save plot
+    plt.savefig('aligned_points_plot.pdf')  
     plt.show()
-
-    # Find nearest neighbors between points in P and Q
-    nearest_neighbors = find_nearest_neighbors(P, Q)
-
-    R, rmsd = kabsch_rmsd(P, Q, nearest_neighbors)
-
-    print("Optimal Rotation Matrix:")
-    print(R)
-    print("Root-Mean-Square Deviation (RMSD):", rmsd)
-
-    # Print original points P and points Q
-    print("Original Points (P):")
-    print(P)
-    print("Points Q:")
-    print(Q)
-
-    # Calculate the aligned points using the optimal rotation matrix
-    P_aligned = np.dot(P - np.mean(P, axis=0), R.T) + np.mean(Q, axis=0)
 
     # Calculate the RMSD and MAE between the aligned points and the target points Q
     rmsd_final = calculate_rmsd(P_aligned, Q)

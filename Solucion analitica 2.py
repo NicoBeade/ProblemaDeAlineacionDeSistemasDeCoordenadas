@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from scipy.spatial import procrustes
 
 #Meassured points
 measuredPoints = np.array([
@@ -24,6 +23,35 @@ planePoints = np.array([
     [1040.679, 343.745, 308.735],
     [1149.313, 290.046, 354.541]
 ])
+
+
+
+def translate_to_centroid(points, centroid):
+    """
+    Translate the points to the specified centroid.
+
+    Parameters:
+        points (numpy array): The set of 3D points.
+        centroid (numpy array): The target centroid to which the points will be translated.
+
+    Returns:
+        translated_points (numpy array): The translated points.
+    """
+    translated_points = points + (centroid - np.mean(points, axis=0))
+    return translated_points
+
+
+
+# Calculate the centroid of measuredPoints and planePoints
+measuredPoints_centroid = np.mean(measuredPoints, axis=0)
+planePoints_centroid = np.mean(planePoints, axis=0)
+
+# Translate measuredPoints to the centroid of planePoints
+measuredPoints = translate_to_centroid(measuredPoints, planePoints_centroid)
+
+
+
+
 
 matrix_12x12 = np.array([
         #r1                                                 #r2                                                         #r3                                             #t1
@@ -65,19 +93,32 @@ independent_terms = np.array([
                             ])
 solution = inv_matrix @ independent_terms
 
-# Extract the rotation matrix and translation vector from your solution
-rotation_matrix = solution[:9].reshape(3, 3)
-translation_vector = solution[9:]
+# null_space_matrix will be a NumPy array containing the vectors representing the null space.
 
-# Perform the Procrustes analysis to enforce the proper rotation constraints
-U, _, Vt = np.linalg.svd(rotation_matrix)
-proper_rotation_matrix = np.dot(U, Vt)
 
-# Reconstruct the homogeneous transformation matrix with the proper rotation and translation
-homog_matrix = np.zeros((4, 4))
-homog_matrix[:3, :3] = proper_rotation_matrix
-homog_matrix[:3, 3] = translation_vector
-homog_matrix[3, 3] = 1
+homog_matrix = [    [solution[0], solution[1], solution[2], solution[9] ],
+                    [solution[3], solution[4], solution[5], solution[10]],
+                    [solution[6], solution[7], solution[8], solution[11]],
+                    [0          , 0          , 0          , 1           ]
+                ]
+
+# # Convertir la lista a un arreglo NumPy para facilitar el cálculo
+# homog_matrix = np.array(homog_matrix)
+
+# # Extraer las primeras tres columnas (vectores) de la matriz
+# v1 = homog_matrix[:3, 0]
+# v2 = homog_matrix[:3, 1]
+# v3 = homog_matrix[:3, 2]
+
+# # Normalizar los vectores dividiéndolos por su magnitud (longitud)
+# v1_normalized = v1 / np.linalg.norm(v1)
+# v2_normalized = v2 / np.linalg.norm(v2)
+# v3_normalized = v3 / np.linalg.norm(v3)
+
+# # Asignar los vectores normalizados de vuelta a la matriz
+# homog_matrix[:3, 0] = v1_normalized
+# homog_matrix[:3, 1] = v2_normalized
+# homog_matrix[:3, 2] = v3_normalized
 
 print("Matrix Homogenea:")
 print(homog_matrix)

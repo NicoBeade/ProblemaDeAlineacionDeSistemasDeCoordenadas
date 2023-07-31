@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-
+"""
 #Meassured points
 P = np.array([
     [611.076,   523.954,    278.609],
@@ -14,7 +14,7 @@ P = np.array([
     [550.137,   1612.65,    613.95],
     [629.971,   1701.17,    664.328]
 ])
-
+"""
 
 #Plane points
 Q = np.array([
@@ -26,7 +26,7 @@ Q = np.array([
     [1040.679,  343.745,    308.735],
     [1149.313,  290.046,    354.541]
 ])
-"""
+
 #Test Rotational Matrix 45° in all axis and translation vector
 
 theta_x = np.radians(45)
@@ -46,13 +46,12 @@ Rz =    np.array([[np.cos(theta_z), -np.sin(theta_z), 0],
 rot = Rz @ Ry @ Rx
 trasl = np.array([50, 100, 150])
 
-P = np.dot(Q, rot) 
+P = Q @ rot.T + trasl
 
 for vector in P:
     random_vector = np.random.uniform(-2, 2, size=(1, 3))
-    vector = rot @ vector + trasl
     #vector = vector + random_vector
-"""
+
 
 def find_nearest_neighbors(P, Q):
     """

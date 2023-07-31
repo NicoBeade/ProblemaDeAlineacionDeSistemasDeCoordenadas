@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
 
+
 #Meassured points
 measuredPoints = np.array([
     [611.076, 523.954, 278.609],
@@ -13,6 +14,7 @@ measuredPoints = np.array([
     [550.137, 1612.65, 613.95],
     [629.971, 1701.17, 664.328]
 ])
+
 
 #Plane points
 planePoints = np.array([
@@ -25,6 +27,32 @@ planePoints = np.array([
     [1149.313, 290.046, 354.541]
 ])
 
+"""
+#Test Rotational Matrix 45° in all axis and translation vector
+
+theta_x = np.radians(45)
+theta_y = np.radians(45)
+theta_z = np.radians(45)
+
+Rx =    np.array([[1, 0, 0],
+        [0, np.cos(theta_x), -np.sin(theta_x)],
+        [0, np.sin(theta_x), np.cos(theta_x)]])
+Ry =    np.array([[np.cos(theta_y), 0, np.sin(theta_y)],
+        [0, 1, 0],
+        [-np.sin(theta_y), 0, np.cos(theta_y)]])
+Rz =    np.array([[np.cos(theta_z), -np.sin(theta_z), 0],
+        [np.sin(theta_z), np.cos(theta_z), 0],
+        [0, 0, 1]])
+
+rot = Rz @ Ry @ Rx
+trasl = np.array([50, 100, 150])
+
+measuredPoints = planePoints @ rot + trasl
+
+#for vector in measuredPoints:
+    #random_vector = np.random.uniform(-2, 2, size=(1, 3))
+    #vector = vector + random_vector
+"""
 
 # Grafico
 fig = plt.figure()

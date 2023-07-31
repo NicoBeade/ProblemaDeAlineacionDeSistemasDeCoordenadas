@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -165,6 +166,28 @@ def calculate_percentage_error(error_metric, data_range):
     return percentage_error
 
 
+
+def calculate_distances_between_points(P_aligned, Q):
+    """
+    Calculate the distance between every pair of points in P_aligned and Q arrays.
+
+    Parameters:
+        P_aligned, Q (numpy arrays): Two sets of 3D points with the same number of points.
+
+    Returns:
+        distances (numpy array): A 1D array containing the distances between every pair of points.
+    """
+    num_p_aligned = P_aligned.shape[0]
+
+    distances = np.zeros(num_p_aligned)
+
+    for i in range(num_p_aligned):
+        distances[i] = np.linalg.norm(P_aligned[i] - Q[i])
+
+    return distances
+
+
+
 # Example usage with 3D visualization:
 if __name__ == "__main__":
     # Two sets of 3D points
@@ -226,3 +249,16 @@ if __name__ == "__main__":
     mae_percentage_error = calculate_percentage_error(mae_final, data_range)
     print("Percentage RMSD Error:", rmsd_percentage_error, "%")
     print("Percentage MAE Error:", mae_percentage_error, "%")
+    
+    
+    # Calculate the distance matrix between the aligned points and the target points
+    dist_matrix = calculate_distances_between_points(P_aligned, Q)
+
+    # Print the distance matrix
+    print("Distance Matrix:")
+    print(dist_matrix)
+    
+    
+    # Save the distance matrix to an Excel file using pandas
+    df_distance_matrix = pd.DataFrame(dist_matrix)
+    df_distance_matrix.to_excel('distance_matrix.xlsx', index=False)

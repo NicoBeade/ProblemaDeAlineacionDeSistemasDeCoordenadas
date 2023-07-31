@@ -2,27 +2,56 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+
 #Meassured points
 P = np.array([
-    [611.076, 523.954, 278.609],
-    [663.378, 716.959, 284.796],
-    [712.111, 934.086, 255.697],
-    [433.926, 1216.223, 255.779],
-    [460.329, 1641.783, 255.694],
-    [550.137, 1612.65, 613.95],
-    [629.971, 1701.17, 664.328]
+    [611.076,   523.954,    278.609],
+    [663.378,   716.959,    284.796],
+    [712.111,   934.086,    255.697],
+    [433.926,   1216.223,   255.779],
+    [460.329,   1641.783,   255.694],
+    [550.137,   1612.65,    613.95],
+    [629.971,   1701.17,    664.328]
 ])
+
 
 #Plane points
 Q = np.array([
-    [0, 0, 0],
-    [199.885, 0, 0],
-    [420.68, 10.804, -35.883],
-    [619.358, 352.94, -34.728],
-    [1033.714, 438.916, -47.298],
-    [1040.679, 343.745, 308.735],
-    [1149.313, 290.046, 354.541]
+    [0,         0,          0],
+    [199.885,   0,          0],
+    [420.68,    10.804,     -35.883],
+    [619.358,   352.94,     -34.728],
+    [1033.714,  438.916,    -47.298],
+    [1040.679,  343.745,    308.735],
+    [1149.313,  290.046,    354.541]
 ])
+"""
+#Test Rotational Matrix 45° in all axis and translation vector
+
+theta_x = np.radians(45)
+theta_y = np.radians(45)
+theta_z = np.radians(45)
+
+Rx =    np.array([[1, 0, 0],
+        [0, np.cos(theta_x), -np.sin(theta_x)],
+        [0, np.sin(theta_x), np.cos(theta_x)]])
+Ry =    np.array([[np.cos(theta_y), 0, np.sin(theta_y)],
+        [0, 1, 0],
+        [-np.sin(theta_y), 0, np.cos(theta_y)]])
+Rz =    np.array([[np.cos(theta_z), -np.sin(theta_z), 0],
+        [np.sin(theta_z), np.cos(theta_z), 0],
+        [0, 0, 1]])
+
+rot = Rz @ Ry @ Rx
+trasl = np.array([50, 100, 150])
+
+P = np.dot(Q, rot) 
+
+for vector in P:
+    random_vector = np.random.uniform(-2, 2, size=(1, 3))
+    vector = rot @ vector + trasl
+    #vector = vector + random_vector
+"""
 
 def find_nearest_neighbors(P, Q):
     """

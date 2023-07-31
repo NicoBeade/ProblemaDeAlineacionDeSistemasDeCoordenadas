@@ -28,21 +28,21 @@ planePoints = np.array([
 
 matrix_12x12 = np.array([
         #r1                                                 #r2                                                         #r3                                             #t1
-    [np.sum(2*(planePoints[:, 0]) ** 2), np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), 0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])), 0, 0],
-    [np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 2]) ** 2), np.sum(2*(planePoints[:, 2])*(planePoints[:, 1])), 0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 2])), 0, 0],
-    [np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 2])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 1]) ** 2), 0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 1])), 0, 0],
+    [np.sum(2*(planePoints[:, 0]) ** 2), np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), 0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])), 0, 0],
+    [np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 1]) ** 2), np.sum(2*(planePoints[:, 1])*(planePoints[:, 2])), 0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 1])), 0, 0],
+    [np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 1])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 2]) ** 2), 0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 2])), 0, 0],
                     #r4                                                 #r5                                                         #r6                                     #t2
-    [0, 0, 0, np.sum(2*(planePoints[:, 0]) ** 2), np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])), 0],
-    [0, 0, 0, np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 2]) ** 2), np.sum(2*(planePoints[:, 2])*(planePoints[:, 1])), 0, 0, 0, 0, np.sum(2*(planePoints[:, 2])), 0],
-    [0, 0, 0, np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 2])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 1]) ** 2), 0, 0, 0, 0, np.sum(2*(planePoints[:, 1])), 0],
+    [0, 0, 0, np.sum(2*(planePoints[:, 0]) ** 2), np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])), 0],
+    [0, 0, 0, np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 1]) ** 2), np.sum(2*(planePoints[:, 1])*(planePoints[:, 2])), 0, 0, 0, 0, np.sum(2*(planePoints[:, 1])), 0],
+    [0, 0, 0, np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 1])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 2]) ** 2), 0, 0, 0, 0, np.sum(2*(planePoints[:, 2])), 0],
                                 #r7                                                 #r8                                                         #r9                             #t3
-    [0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0]) ** 2), np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), 0, 0, np.sum(2*(planePoints[:, 0]))],
-    [0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 2]) ** 2), np.sum(2*(planePoints[:, 2])*(planePoints[:, 1])), 0, 0, np.sum(2*(planePoints[:, 2]))],
-    [0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 2])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 1]) ** 2), 0, 0, np.sum(2*(planePoints[:, 1]))],
+    [0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0]) ** 2), np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), 0, 0, np.sum(2*(planePoints[:, 0]))],
+    [0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])*(planePoints[:, 1])), np.sum(2*(planePoints[:, 1]) ** 2), np.sum(2*(planePoints[:, 1])*(planePoints[:, 2])), 0, 0, np.sum(2*(planePoints[:, 1]))],
+    [0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 1])*(planePoints[:, 2])), np.sum(2*(planePoints[:, 2]) ** 2), 0, 0, np.sum(2*(planePoints[:, 2]))],
     
-    [np.sum(2*(planePoints[:, 0])), np.sum(2*(planePoints[:, 2])), np.sum(2*(planePoints[:, 1])), 0, 0, 0, 0, 0, 0, 2, 0, 0],
-    [0, 0, 0, np.sum(2*(planePoints[:, 0])), np.sum(2*(planePoints[:, 2])), np.sum(2*(planePoints[:, 1])), 0, 0, 0, 0, 2, 0],
-    [0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])), np.sum(2*(planePoints[:, 2])), np.sum(2*(planePoints[:, 1])), 0, 0, 2]
+    [np.sum(2*(planePoints[:, 0])), np.sum(2*(planePoints[:, 1])), np.sum(2*(planePoints[:, 2])), 0, 0, 0, 0, 0, 0, 2, 0, 0],
+    [0, 0, 0, np.sum(2*(planePoints[:, 0])), np.sum(2*(planePoints[:, 1])), np.sum(2*(planePoints[:, 2])), 0, 0, 0, 0, 2, 0],
+    [0, 0, 0, 0, 0, 0, np.sum(2*(planePoints[:, 0])), np.sum(2*(planePoints[:, 1])), np.sum(2*(planePoints[:, 2])), 0, 0, 2]
 ])
 
 
@@ -52,21 +52,20 @@ inv_matrix = np.linalg.inv(matrix_12x12)
 # Define your independent terms
 independent_terms = np.array([
                             np.sum(2 * (planePoints[:, 0]) * measuredPoints[:, 0]),
-                            np.sum(2 * (planePoints[:, 2]) * measuredPoints[:, 0]),
                             np.sum(2 * (planePoints[:, 1]) * measuredPoints[:, 0]),
+                            np.sum(2 * (planePoints[:, 2]) * measuredPoints[:, 0]),
                             np.sum(2 * (planePoints[:, 0]) * measuredPoints[:, 1]),
-                            np.sum(2 * (planePoints[:, 2]) * measuredPoints[:, 1]),
                             np.sum(2 * (planePoints[:, 1]) * measuredPoints[:, 1]),
+                            np.sum(2 * (planePoints[:, 2]) * measuredPoints[:, 1]),
                             np.sum(2 * (planePoints[:, 0]) * measuredPoints[:, 2]),
-                            np.sum(2 * (planePoints[:, 2]) * measuredPoints[:, 2]),
                             np.sum(2 * (planePoints[:, 1]) * measuredPoints[:, 2]),
+                            np.sum(2 * (planePoints[:, 2]) * measuredPoints[:, 2]),
                             np.sum(2 * measuredPoints[:, 0]),
                             np.sum(2 * measuredPoints[:, 1]),
                             np.sum(2 * measuredPoints[:, 2]), 
                             ])
 solution = inv_matrix @ independent_terms
 
-# null_space_matrix will be a NumPy array containing the vectors representing the null space.
 
 
 homog_matrix = [    [solution[0], solution[1], solution[2], solution[9] ],

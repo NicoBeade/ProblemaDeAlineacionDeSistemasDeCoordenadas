@@ -58,6 +58,16 @@ planePoints_centroid = np.mean(planePoints, axis=0)
 measuredPoints = translate_to_centroid(measuredPoints, planePoints_centroid)
 
 
+def normalize_data(data):
+    mean = np.mean(data, axis=0)
+    std = np.std(data, axis=0)
+    normalized_data = (data - mean) / std
+    return normalized_data, mean, std
+
+
+normalized_measuredPoints, mean_measured, std_measured = normalize_data(measuredPoints)
+normalized_planePoints, mean_plane, std_plane = normalize_data(planePoints)
+
 
 
 def rotation_matrix(angle, axis):
@@ -328,19 +338,23 @@ measuredPoints = np.dot(measuredPoints - np.mean(measuredPoints, axis=0), R.T) +
 
 
 
-# Call the orthogonal_rotation_matrix_gradient_descent function to find the optimal rotation matrix
-measuredPoints *= 0.01
-planePoints *= 0.01
-optimal_rotation_matrix, errors = orthogonal_rotation_matrix_gradient_descent(measuredPoints, planePoints)
-measuredPoints *= 100
-planePoints *= 100
+optimal_rotation_matrix, errors = orthogonal_rotation_matrix_gradient_descent(normalized_measuredPoints, normalized_planePoints)
 
+# Denormalize the rotation matrix
+optimal_rotation_matrix_denormalized = np.dot(np.dot(np.linalg.inv(np.diag(std_measured)), optimal_rotation_matrix), np.diag(std_plane))
+
+# Apply the denormalized rotation matrix to the measured points
+transformedPoints = np.dot(measuredPoints, optimal_rotation_matrix_denormalized.T)
+
+# Denormalize the transformed points for plotting
+denormalized_transformedPoints = np.dot(transformedPoints * std_measured + mean_measured, np.linalg.inv(optimal_rotation_matrix_denormalized).T)
+
+
+# Print the results
 print("Optimal Rotation Matrix:")
-print(optimal_rotation_matrix)
+print(optimal_rotation_matrix_denormalized)
 print("\nFinal Error:", errors[-1])
 
-# Apply the rotation matrix to the measured points
-transformedPoints = np.dot(measuredPoints, optimal_rotation_matrix.T)
 
 
     
@@ -379,6 +393,9 @@ plt.show()
 
 # Calculate the distance matrix between the aligned points and the target points
 dist_matrix = calculate_distances_between_points(transformedPoints, planePoints)
+
+# Denormalize the distance matrix
+denormalized_dist_matrix = dist_matrix * (std_measured ** 2 / std_plane ** 2)
 
 # Print the distance matrix
 print("Distance Matrix:")

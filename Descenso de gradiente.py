@@ -3,7 +3,34 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
 
-#Meassured points
+
+# Measured points
+measuredPoints = np.array([
+    [538.973, 287.625, 279.016],
+    [575.475, 430.953, 209.006],
+    [605.592, 598.163, 174.278],
+    [790.063, 837.853, 174.327],
+    [765.639, 1036.867, 181.282],
+    [740.469, 1255.869, 182.175],
+    [717.278, 1490.621, 175.782],
+    [561.803, 1779.953, 173.089]
+])
+
+# Plane points
+planePoints = np.array([
+    [0, -0.005, 0.001],
+    [162.351, -0.005, 0.001],
+    [329.508, -39.429, 6.183],
+    [582.752, -136.795, -122.818],
+    [753.254, -228.816, -62.653],
+    [935.295, -322.52, 0.518],
+    [1140.831, -422.458, 69.039],
+    [1364.558, -555.779, 271.867]
+])
+
+''' SETS DE PUNTOS
+SET NUMERO 1
+#Measured points
 measuredPoints = np.array([
     [611.076, 523.954, 278.609],
     [663.378, 716.959, 284.796],
@@ -24,6 +51,81 @@ planePoints = np.array([
     [1040.679, 343.745, 308.735],
     [1149.313, 290.046, 354.541]
 ])
+
+SET NUMERO 2
+# Measured points
+measuredPoints = np.array([
+    [534.255, 198.279, 276.587],
+    [603.302, 250.016, 248.601],
+    [589.618, 514.079, 248.501],
+    [599.638, 774.819, 750.805],
+    [544.579, 965.272, 653.945],
+    [626.964, 992.35, 637.548]
+])
+
+# Plane points
+planePoints = np.array([
+    [0, 0, 0],
+    [90, 0, 0],
+    [229.981, -120.595, 187.931],
+    [229.921, -685.284, 188.015],
+    [326.273, -687.518, 383.818],
+    [409.378, -687.518, 355.203]
+])
+
+SET NUMERO 3
+# Measured points
+measuredPoints = np.array([
+    [538.973, 287.625, 279.016],
+    [575.475, 430.953, 209.006],
+    [605.592, 598.163, 174.278],
+    [790.063, 837.853, 174.327],
+    [765.639, 1036.867, 181.282],
+    [740.469, 1255.869, 182.175],
+    [717.278, 1490.621, 175.782],
+    [561.803, 1779.953, 173.089]
+])
+
+# Plane points
+planePoints = np.array([
+    [0, -0.005, 0.001],
+    [162.351, -0.005, 0.001],
+    [329.508, -39.429, 6.183],
+    [582.752, -136.795, -122.818],
+    [753.254, -228.816, -62.653],
+    [935.295, -322.52, 0.518],
+    [1140.831, -422.458, 69.039],
+    [1364.558, -555.779, 271.867]
+])
+'''
+
+'''
+#Test Rotational Matrix 45° in all axis and translation vector
+
+theta_x = np.radians(45)
+theta_y = np.radians(45)
+theta_z = np.radians(45)
+
+Rx =    np.array([[1, 0, 0],
+        [0, np.cos(theta_x), -np.sin(theta_x)],
+        [0, np.sin(theta_x), np.cos(theta_x)]])
+Ry =    np.array([[np.cos(theta_y), 0, np.sin(theta_y)],
+        [0, 1, 0],
+        [-np.sin(theta_y), 0, np.cos(theta_y)]])
+Rz =    np.array([[np.cos(theta_z), -np.sin(theta_z), 0],
+        [np.sin(theta_z), np.cos(theta_z), 0],
+        [0, 0, 1]])
+
+rot = Rz @ Ry @ Rx
+trasl = np.array([50, 100, 150])
+
+measuredPoints = planePoints @ rot.T 
+#+ trasl
+
+for vector in measuredPoints:
+    random_vector = np.random.uniform(-2, 2, size=(1, 3))
+    #vector = vector + random_vector
+'''
 
 
 # Grafico
